@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html data-bs-theme="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de média FIAP</title>
+    <link rel="icon" href="https://www.fiap.com.br/imgs/favicon.ico">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <style>
+        .fiap {
+            color: #ee145b;
+        }
+
+        .border-fiap {
+            border-color: #ee145b;
+        }
+
+        .bg-fiap {
+            background-color: #ee145b;
+        }
+
+        img {
+            width: 20rem;
+        }
+
+        .seta {
+            transform: translateY(-5px);
+            position: relative;
+            animation: gangorra 1s infinite alternate;
+        }
+
+        @keyframes gangorra {
+            0% {
+                transform: translateY(-5px);
+            }
+
+            100% {
+                transform: translateY(5px);
+            }
+        }
+
+        .btn-fiap:hover {
+            background-color: #cc0b4c;
+        }
+
+        .modal-custom {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-custom.show {
+            opacity: 1;
+            display: flex;
+        }
+
+        .modal-content-custom {
+            background-color: #1f1f1f;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            margin: 0 1rem;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-custom.show .modal-content-custom {
+            transform: translateY(0);
+        }
+
+        .modal-content-custom h2 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .close-modal {
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: #ee145b;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            max-width: 150px;
+        }
+
+        .close-modal:hover {
+            background-color: #cc0b4c;
+        }
+
+        a {
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+
+<body class="d-flex flex-column justify-content-center align-items-center mt-3 py-md-5">
+    <img class="img-fluid mb-3" src="https://vestibular.fiap.com.br/imagens/logo-fiap.png" />
+    <h1 class="fiap fw-light text-center">Calculadora de média<svg class="fiap ms-2" xmlns="http://www.w3.org/2000/svg" width="32"
+            height="32" fill="currentColor" class="bi bi-calculator-fill" viewBox="0 0 16 16">
+            <path
+                d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2zm2 .5v2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0-.5.5m0 4v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5M4.5 9a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM4 12.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5M7.5 6a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM7 9.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5m.5 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM10 6.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5m.5 2.5a.5.5 0 0 0-.5.5v4a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 0-.5-.5z" />
+        </svg>
+    </h1>
+    <div class="d-flex flex-column justify-content-center align-items-center text-center  px-3">
+        <h3 class="fw-light fiap mt-4"><svg class="seta" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                    d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4" />
+            </svg>Preencha suas notas<svg class="seta" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                    d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4" />
+            </svg></h3>
+        <div class="d-flex flex-column align-items-center justify-content-center text-center w-100">
+
+            <div class="m-2 d-flex flex-column justify-content-center align-items-center text-center ">
+                <h2 class="fiap">Checkpoints</h2>
+                <div class="input-group m-2">
+                    <span class="input-group-text border-fiap">Checkpoint 1</span>
+                    <input type="number" max="10" min="0" class="form-control border-fiap fixed-width-input" id="cp1">
+                </div>
+                <div class="input-group m-2">
+                    <span class="input-group-text border-fiap">Checkpoint 2</span>
+                    <input type="number" max="10" min="0" class="form-control border-fiap fixed-width-input" id="cp2">
+                </div>
+            </div>
+            <div class="d-flex flex-column justify-content-center align-items-center text-center ">
+                <h2 class="fiap">Challenge Sprints</h2>
+                <div class="input-group m-2">
+                    <span class="input-group-text border-fiap">Sprint 1</span>
+                    <input type="number" max="10" min="0" class="form-control border-fiap fixed-width-input" id="sp1">
+                </div>
+                <div class="input-group m-2">
+                    <span class="input-group-text border-fiap">Sprint 2</span>
+                    <input type="number" max="10" min="0" class="form-control border-fiap fixed-width-input" id="sp2">
+                </div>
+            </div>
+
+            <div class="my-3 d-flex flex-column justify-content-center align-items-center text-center">
+                <h2 class="fiap">Global Solution</h2>
+                <div class="input-group m-2">
+                    <span class="input-group-text border-fiap">GS</span>
+                    <input type="number" max="10" min="0" class="form-control border-fiap fixed-width-input" id="gs">
+                </div>
+            </div>
+            <button class="btn bg-fiap btn-fiap mb-3" id="btnMedia">Calcular Média</button>
+            <button class="btn bg-fiap btn-fiap" id="btnNotaMin">Calcular nota<br>mínima GS</button>
+        </div>
+    </div>
+
+    <div class="modal-custom" id="modalMedia">
+        <div class="modal-content-custom">
+            <h2 class="fiap">Sua média final:</h2>
+            <div id="resultadoMedia" style="font-size: 2rem; font-weight: bold;">0.0</div>
+            <button class="close-modal" onclick="fecharModal()">Fechar</button>
+        </div>
+    </div>
+
+    <div class="modal-custom" id="modalNotaMin">
+        <div class="modal-content-custom">
+            <h2 class="fiap">Nota mínima na GS:</h2>
+            <div id="resultadoNotaMin" style="font-size: 2rem; font-weight: bold;">0.0</div>
+            <button class="close-modal" onclick="fecharModalNotaMin()">Fechar</button>
+        </div>
+    </div>
+    <footer class="bg-fiap text-white text-center w-100 position-absolute bottom-0 py-3">
+        <a href="https://linkedin.com/in/marcelo-cintra23" class="me-4 text-white icon-link icon-link-hover" style="--bs-icon-link-transform: translate3d(0, -.125rem, 0);">LinkedIn <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
+  <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z"/>
+</svg></a>
+        <a href="https://github.com/macintr" class="text-white icon-link icon-link-hover" style="--bs-icon-link-transform: translate3d(0, -.125rem, 0);">GitHub <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+  <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/>
+</svg></a>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-7VHnUSO91oXU5FErcO5F2i5SLlYLM93r+0eYmBjWewXqlaAvT8fUjOLaVyS/VZJk"
+        crossorigin="anonymous"></script>
+
+    <script>
+        const cp1 = document.getElementById("cp1");
+        const cp2 = document.getElementById("cp2");
+        const sp1 = document.getElementById("sp1");
+        const sp2 = document.getElementById("sp2");
+        const gs = document.getElementById("gs");
+
+        const modalMedia = document.getElementById("modalMedia");
+        const resultadoMedia = document.getElementById("resultadoMedia");
+
+        const modalNotaMin = document.getElementById("modalNotaMin");
+        const resultadoNotaMin = document.getElementById("resultadoNotaMin");
+
+        function isValid(value) {
+            return value !== "" && !isNaN(value) && value >= 0 && value <= 10;
+        }
+
+        function fecharModal() {
+            modalMedia.classList.remove("show");
+            setTimeout(() => {
+                modalMedia.style.display = "none";
+            }, 300);
+        }
+
+        function fecharModalNotaMin() {
+            modalNotaMin.classList.remove("show");
+            setTimeout(() => {
+                modalNotaMin.style.display = "none";
+            }, 300);
+        }
+
+        function abrirModal(modal) {
+            modal.style.display = "flex";
+            setTimeout(() => {
+                modal.classList.add("show");
+            }, 10);
+        }
+
+        document.getElementById("btnMedia").onclick = () => {
+            const valores = [cp1.value, cp2.value, sp1.value, sp2.value, gs.value];
+
+            if (valores.every(isValid)) {
+                const mediaParcial = (Number(cp1.value) + Number(cp2.value) + Number(sp1.value) + Number(sp2.value)) / 4;
+                const mediaFinal = (mediaParcial * 0.4) + (Number(gs.value) * 0.6);
+                resultadoMedia.textContent = mediaFinal.toFixed(2);
+                abrirModal(modalMedia);
+            } else {
+                alert("Preencha todos os campos com valores válidos.");
+            }
+        };
+
+        document.getElementById("btnNotaMin").onclick = () => {
+            const valores = [cp1.value, cp2.value, sp1.value, sp2.value];
+
+            if (valores.every(isValid)) {
+                const mediaParcial = (Number(cp1.value) + Number(cp2.value) + Number(sp1.value) + Number(sp2.value)) / 4;
+                const notaMinimaGS = (6 - (mediaParcial * 0.4)) / 0.6;
+                resultadoNotaMin.textContent = notaMinimaGS.toFixed(2);
+                abrirModal(modalNotaMin);
+            } else {
+                alert("Preencha todos os campos dos checkpoints e sprints com valores válidos.");
+            }
+        };
+
+        // Fechar modais ao clicar fora do conteúdo
+        window.onclick = (event) => {
+            if (event.target === modalMedia) fecharModal();
+            if (event.target === modalNotaMin) fecharModalNotaMin();
+        };
+    </script>
+
+</body>
+
+</html>
